@@ -23,6 +23,7 @@ export const styles = StyleSheet.create({
     letterSpacing: 2,
   },
 
+
   list: {
     flex: 1,
   },
@@ -84,5 +85,29 @@ export const styles = StyleSheet.create({
   errorText: {
     fontSize: typography.body,
     color: colors.error,
+  },
+
+  footer: {
+    paddingVertical: spacing.lg,
+  },
+
+  scrollTopButton: {
+    position: 'absolute',
+    bottom: spacing.xl,
+    right: spacing.lg,
+    width: 44,
+    height: 44,
+    borderRadius: radius.round,
+    backgroundColor: colors.primary,
+    borderWidth: 2,
+    borderColor: colors.secondary,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  scrollTopText: {
+    color: colors.secondary,
+    fontSize: typography.title,
+    fontWeight: 'bold',
   },
 });

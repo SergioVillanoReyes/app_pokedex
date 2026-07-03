@@ -3,6 +3,12 @@ export type PokemonRaw = {
   url: string
 }
 
+export type PokemonListResponse = {
+  count: number
+  next: string | null
+  results: PokemonRaw[]
+}
+
 export type PokemonDetailResponse = {
   id: number;
   name: string;
