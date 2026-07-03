@@ -1,8 +1,10 @@
 import { createContext, useContext } from 'react';
 import { GetPokemonListUseCase } from '../../domain/usecases/GetPokemonListUseCase';
+import { GetPokemonDetailUseCase } from '../../domain/usecases/GetPokemonDetailUseCase';
 
 type AppDependencies = {
-  getPokemonListUseCase: GetPokemonListUseCase
+  getPokemonListUseCase: GetPokemonListUseCase,
+  getPokemonDetailUseCase: GetPokemonDetailUseCase
 }
 
 export const DependencyContext = createContext<AppDependencies | null>(null);

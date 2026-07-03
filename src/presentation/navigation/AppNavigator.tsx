@@ -21,15 +21,15 @@ export const AppNavigator = () : JSX.Element => {
     },
   })
 
-  const resolveScreen = (route: Route) : JSX.Element => {
-    switch(route) {
+  const resolveScreen = (route: AppRoute) : JSX.Element => {
+    switch(route.name) {
     case Route.LIST:
       return <ListScreen navController={navigation()} />
     case Route.DETAIL:
-      return <DetailScreen navController={navigation()}/>
+      return <DetailScreen navController={navigation()} id={route.id} />
     }
   }
 
-  return resolveScreen(currentRoute.name)
+  return resolveScreen(currentRoute)
 
 }

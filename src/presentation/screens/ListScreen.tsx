@@ -17,7 +17,7 @@ export const ListScreen = (
   }
 
   return (
-    <>
+    <View style={{backgroundColor: 'white' }}>
       <FlatList 
         data={pokemons}
         keyExtractor={(item) => item.id.toString()}
@@ -26,11 +26,11 @@ export const ListScreen = (
             <Image source={{ uri: item.image }} style={{ width: 100, height: 100 }} />
             <Text>{item.name}</Text>
             <Button title="GO DETAIL" onPress={() => {
-              navController.navigate({ name: Route.DETAIL, id: 1 })
+              navController.navigate({ name: Route.DETAIL, id: item.id })
             }} />
           </View>
         )}
       />
-    </>
+    </View>
   )
 }
