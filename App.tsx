@@ -10,7 +10,7 @@ export default function App() {
         getPokemonListUseCase,
         getPokemonDetailUseCase
       }}>
-        <SafeAreaView>
+        <SafeAreaView style={{ flex: 1 }}>
           <AppNavigator />
         </SafeAreaView>
       </DependencyContext.Provider>
