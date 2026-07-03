@@ -4,6 +4,7 @@ import { NavController, Route } from '../../navigation/navigator.types'
 import { useListScreenViewModel } from '../../hooks/useListScreenViewModel'
 import { styles } from './styles'
 import { AppButton } from '../../components/AppButton'
+import { ListSkeletonCard } from '../../components/SkeletonLoader'
 
 export const ListScreen = (
   { navController }: { navController: NavController }
@@ -21,8 +22,8 @@ export const ListScreen = (
         <Text style={styles.headerTitle}>POKEDEX</Text>
       </View>
       {loading && (
-        <View style={styles.loading}>
-          <Text style={styles.loadingText}>Cargando...</Text>
+        <View style={styles.listContent}>
+          {[1, 2, 3, 4, 5].map((i) => <ListSkeletonCard key={i} />)}
         </View>
       )}
       {error && (

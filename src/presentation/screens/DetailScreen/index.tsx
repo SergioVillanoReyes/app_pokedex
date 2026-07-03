@@ -4,6 +4,7 @@ import { NavController } from '../../navigation/navigator.types'
 import { useDetailScreenViewModel } from '../../hooks/useDetailScreenViewModel'
 import { styles } from './styles'
 import { AppButton } from '../../components/AppButton'
+import { DetailSkeletonLoader } from '../../components/SkeletonLoader'
 
 type DetailScreenProps = {
   navController: NavController
@@ -31,11 +32,7 @@ export const DetailScreen = (
         </View>
       </View>
 
-      {loading && (
-        <View style={styles.center}>
-          <Text style={styles.loadingText}>Cargando...</Text>
-        </View>
-      )}
+      {loading && <DetailSkeletonLoader />}
 
       {error && (
         <View style={styles.center}>
