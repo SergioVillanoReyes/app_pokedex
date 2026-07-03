@@ -16,6 +16,10 @@ export const ListScreen = (
     return <Text>Cargando...</Text>
   }
 
+  if(error){
+    return <Text>{error}</Text>
+  }
+
   return (
     <View style={{backgroundColor: 'white' }}>
       <FlatList 

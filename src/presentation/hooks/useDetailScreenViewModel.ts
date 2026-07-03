@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useDependencies } from '../context/DependencyContext';
 import { PokemonDetail } from '../../domain/entities/Pokemon';
+import { HttpError } from '../../data/http/HttpError';
 
 export const useDetailScreenViewModel = (id: number) => {
   const [detailPokemon, setDetailPokemon] = useState<PokemonDetail>();
@@ -15,9 +16,12 @@ export const useDetailScreenViewModel = (id: number) => {
     try {
       const data = await getPokemonDetailUseCase.execute(id)
       setDetailPokemon(data)
-    } catch (err: any) {
-      console.log(err);
-      setError(err.message || 'An error occurred' )
+    } catch (err) {
+      if (err instanceof HttpError) {
+        setError(`[${err.status}] ${err.message}`)
+      } else {
+        setError('An unexpected error occurred')
+      }
     } finally {
       setLoading(false)
     }

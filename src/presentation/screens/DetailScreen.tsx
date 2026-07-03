@@ -21,7 +21,9 @@ export const DetailScreen = (
     return <Text>Cargando...</Text>
   }
 
-  console.log('detail', detailPokemon);
+  if(error){
+    return <Text>{error}</Text>
+  }
 
   return (
     <View style={{backgroundColor: 'white', height: '100%', padding: 20 }}>

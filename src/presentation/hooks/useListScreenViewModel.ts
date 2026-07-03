@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Pokemon } from '../../domain/entities/Pokemon';
 import { useDependencies } from '../context/DependencyContext';
+import { HttpError } from '../../data/http/HttpError';
 
 export const useListScreenViewModel = () => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
@@ -15,9 +16,12 @@ export const useListScreenViewModel = () => {
     try {
       const data = await getPokemonListUseCase.execute();
       setPokemons(data);
-    } catch (err: any) {
-      console.error(err);
-      setError(err.message || 'An error occurred' )
+    } catch (err) {
+      if (err instanceof HttpError) {
+        setError(`[${err.status}] ${err.message}`)
+      } else {
+        setError('An unexpected error occurred')
+      }
     } finally {
       setLoading(false)
     }
