@@ -1,17 +1,26 @@
 import { NativeModules, Platform } from 'react-native'
 import { ILocalStorage } from './ILocalStorage'
 
-const { StorageModule } = NativeModules
+const StorageModule = NativeModules?.StorageModule
 const isAndroid = Platform.OS === 'android'
 
 export class LocalStorageDataSource implements ILocalStorage {
   async setItem(key: string, value: string): Promise<void> {
-    if (!isAndroid || !StorageModule) return
-    await StorageModule.setItem(key, value)
+    try {
+      if (!isAndroid || !StorageModule) return
+      await StorageModule.setItem(key, value)
+    } catch (error) {
+      console.warn('LocalStorageDataSource.setItem error:', error)
+    }
   }
 
   async getItem(key: string): Promise<string | null> {
-    if (!isAndroid || !StorageModule) return null
-    return StorageModule.getItem(key)
+    try {
+      if (!isAndroid || !StorageModule) return null
+      return await StorageModule.getItem(key)
+    } catch (error) {
+      console.warn('LocalStorageDataSource.getItem error:', error)
+      return null
+    }
   }
 }
