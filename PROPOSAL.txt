@@ -1,0 +1,81 @@
+PROPUESTA TÉCNICA Y ARQUITECTURA — POKÉDEX APP
+
+Este documento describe la arquitectura, decisiones técnicas y el estado actual del proyecto de la Pokédex.
+
+=========================================
+1. DESCRIPCIÓN DE LA ARQUITECTURA Y DECISIONES TÉCNICAS
+=========================================
+
+El proyecto está diseñado bajo los principios de Clean Architecture (Arquitectura Limpia), promoviendo la separación de responsabilidades y la facilidad de testing.
+
+Capas del Sistema:
+------------------
+* Presentación (src/presentation):
+  - Utiliza componentes puros de React Native.
+  - La lógica de las pantallas está delegada a Custom Hooks (View Models) como useListScreenViewModel.ts para mantener los componentes visuales desacoplados del negocio.
+  - Inyección de dependencias mediante React Context (DependencyContext.tsx).
+
+* Dominio (src/domain):
+  - Es una capa de TypeScript puro, libre de dependencias de React o frameworks.
+  - Define las entidades básicas de datos (Pokemon.ts) y los casos de uso principales como GetPokemonListUseCase.ts.
+
+* Datos (src/data):
+  - Implementa los repositorios.
+  - Administra la obtención de datos de la PokeAPI mediante un cliente HTTP personalizado (HttpClient.ts) y gestiona la caché offline a través del repositorio.
+
+* Core / DI (src/core/di):
+  - Módulo encargado de instanciar todas las dependencias (container.ts) de manera centralizada.
+
+Decisiones Técnicas Clave:
+--------------------------
+* Inyección de Dependencias Manual: En lugar de utilizar frameworks pesados como InversifyJS, se instancian las dependencias de forma secuencial en src/core/di/container.ts y se distribuyen por la aplicación mediante el contexto de React. Esto optimiza el tamaño del bundle y los tiempos de compilación.
+* Persistencia en Android mediante Módulo Nativo: Uso de EncryptedSharedPreferences de Android expuesto a React Native a través de una clase nativa escrita en Kotlin (StorageModule.kt). Esto asegura que los datos persistidos de los Pokémon en Android se guarden de forma encriptada en el almacenamiento local.
+* Caché Temporal con TTL: Los datos de Pokémon se guardan localmente con un tiempo de expiración (TTL) de 5 minutos, reduciendo las consultas repetitivas al servidor y permitiendo un fallback offline fluido.
+* Seguridad Multiplataforma: La clase LocalStorageDataSource está protegida con opcionales encadenados y manejo de excepciones (try/catch) para evitar cualquier caída del hilo de JavaScript si el módulo nativo no está disponible (como en iOS o entornos de test).
+
+
+=========================================
+2. LISTADO DE LIBRERÍAS UTILIZADAS
+=========================================
+
+A continuación se listan las dependencias del proyecto y su justificación:
+
+Dependencias de Producción (dependencies):
+------------------------------------------
+* react y react-native: El framework base para el renderizado e interfaz móvil multiplataforma.
+* react-native-safe-area-context: Requerido para posicionar de forma correcta y segura los componentes visuales alrededor de muescas (notches), barras de estado y áreas táctiles de dispositivos modernos tanto en iOS como en Android.
+
+Dependencias de Desarrollo y Pruebas (devDependencies):
+-------------------------------------------------------
+* jest y @react-native/jest-preset: Suite de pruebas y simulador de la API de React Native, indispensable para correr tests unitarios de forma ágil sin emulador.
+* typescript: Añade tipado estático al proyecto, reduciendo la cantidad de errores en tiempo de ejecución.
+* eslint y prettier: Utilizados para garantizar el estilo y la calidad del código a lo largo del desarrollo.
+
+
+=========================================
+3. EVIDENCIA DE FUNCIONAMIENTO
+=========================================
+
+El funcionamiento correcto de la lógica de negocio y comunicación de datos está cubierto por 20 pruebas automatizadas en Jest.
+
+Ejecución de Pruebas:
+---------------------
+Puedes ejecutar la suite de pruebas mediante el comando:
+> npm test
+
+Resultados de Ejecución:
+------------------------
+Todas las pruebas unitarias pasan exitosamente, validando los siguientes comportamientos:
+- Flujo correcto de almacenamiento en caché temporal en los repositorios.
+- Manejo seguro de fallos y desconexión en el cliente HTTP.
+- Mapeo correcto de modelos crudos de API a entidades limpias de dominio.
+- Renderizado inicial del componente raíz de la aplicación.
+
+
+=========================================
+4. PENDIENTES, TRADE-OFFS Y MEJORAS FUTURAS
+=========================================
+
+* Persistencia Nativa en iOS (Pendiente): Actualmente, la persistencia nativa es un no-op en iOS (la app funciona solo en memoria). Una mejora prioritaria es implementar el guardado en la plataforma de Apple usando el Keychain de iOS mediante un módulo nativo en Swift.
+* Detección Dinámica de Red (Mejora): Actualmente, la clase NetworkChecker utiliza una verificación simple basada en errores de fetch. Se podría integrar @react-native-community/netinfo para escuchar de manera reactiva el estado de red de la aplicación.
+* Paginación Infinita y Pull-to-Refresh (Mejora): La lista de Pokémon podría enriquecerse con soporte nativo para refrescar mediante gestos de arrastre y carga más inteligente de imágenes para optimizar el rendimiento de la memoria.

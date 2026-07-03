@@ -90,3 +90,19 @@ Las pruebas cubren los siguientes componentes críticos del sistema:
 - **Casos de Uso (Domain)**: Lógica de casos de uso como [GetPokemonListUseCase](file:///Users/user/Desktop/study/app_pokedex/src/domain/usecases/GetPokemonListUseCase.ts) y [GetPokemonDetailUseCase](file:///Users/user/Desktop/study/app_pokedex/src/domain/usecases/GetPokemonDetailUseCase.ts).
 - **Repositores (Data)**: Pruebas sobre [PokemonRepositoryImpl](file:///Users/user/Desktop/study/app_pokedex/src/data/repositories/PokemonRepositoryImpl.ts) que validan el comportamiento de la caché temporal offline.
 - **Cliente HTTP**: Aislamiento y validación de errores de conexión/red en [HttpClient](file:///Users/user/Desktop/study/app_pokedex/src/data/http/HttpClient.ts).
+
+---
+
+## 📸 Evidencia de Funcionamiento
+
+A continuación se muestran capturas de pantalla del funcionamiento de la aplicación y la ejecución de la suite de pruebas unitarias:
+
+### Interfaz de Usuario y Caché
+| Vista de Lista de Pokémon | Detalle del Pokémon |
+|:---:|:---:|
+| ![Vista de Lista](screenshots/screenshot_1.png) | ![Detalle del Pokémon](screenshots/screenshot_2.png) |
+
+### Pruebas y Estado Offline
+| Ejecución de Pruebas Unitarias (Jest) | Simulación de Caché Offline |
+|:---:|:---:|
+| ![Pruebas Unitarias](screenshots/screenshot_3.png) | ![Caché Offline](screenshots/screenshot_4.png) |
