@@ -38,7 +38,7 @@ src/
 │   │   └── PokemonRepositoryImpl.ts  # Cache por página + fallback offline
 │   └── storage/
 │       ├── ILocalStorage.ts          # Interfaz
-│       └── LocalStorageDataSource.ts # Módulo nativo (Android) / no-op (iOS)
+│       └── LocalStorageDataSource.ts # Módulo nativo (Android) / (iOS)
 │
 ├── domain/
 │   ├── entities/Pokemon.ts           # Pokemon, PokemonDetail, PokemonStat
@@ -104,5 +104,6 @@ FlatList.onEndReached
 ## Persistencia
 
 `EncryptedSharedPreferences` (Android) via módulo nativo `StorageModule.kt`.
+`UserDefaults` (iOS) via módulo nativo `StorageModule.swift`.
 Cache por página con clave `pokemon_list_{offset}_{limit}` y TTL de 5 minutos.
 En iOS el storage es no-op — la app funciona sin cache.

@@ -10,7 +10,7 @@ La aplicación está dividida en capas desacopladas para garantizar el aislamien
 
 * **`presentation/`**: Contiene las pantallas ([ListScreen], [DetailScreen]), los componentes reutilizables, los hooks de React (View Models) y la navegación.
 * **`domain/`**: Es el núcleo puro del proyecto. Define las entidades de negocio y los casos de uso independientes de cualquier framework o librería externa.
-* **`data/`**: Implementa las interfaces de repositorios definidas por la capa de dominio. Gestiona la obtención de datos desde la PokeAPI a través de un cliente HTTP y maneja la persistencia de caché local en Android mediante un módulo nativo.
+* **`data/`**: Implementa las interfaces de repositorios definidas por la capa de dominio. Gestiona la obtención de datos desde la PokeAPI a través de un cliente HTTP y maneja la persistencia de caché local en Android y iOS mediante un módulo nativo.
 * **`core/di/`**: El contenedor de inyección de dependencias que conecta todas las capas del proyecto.
 
 Para una descripción detallada, consulta el archivo [ARCHITECTURE.md](/app_pokedex/ARCHITECTURE.md).

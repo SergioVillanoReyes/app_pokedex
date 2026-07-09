@@ -36,7 +36,10 @@ export const useListScreenViewModel = () => {
   }
 
   const loadMore = async () => {
-    if (loadingMore || !hasMore) return
+    if (loading) return;
+    if (loadingMore) return;
+    if (!hasMore) return;
+    if (pokemons.length === 0) return;
     setLoadingMore(true)
     try {
       const { pokemons: data, hasMore: more } = await getPokemonListUseCase.execute(offsetRef.current, PAGE_SIZE)
