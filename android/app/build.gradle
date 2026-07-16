@@ -84,6 +84,9 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        def talsecHash = project.findProperty("TALSEC_PROD_HASH") ?: ""
+        buildConfigField "String", "TALSEC_PROD_HASH", "\"${talsecHash}\""
+
     }
     signingConfigs {
         debug {
@@ -111,6 +114,9 @@ dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
+
+    //RASP
+    implementation("com.aheaditec.talsec.security:TalsecSecurity-Community:18.0.2")
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")

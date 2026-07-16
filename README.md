@@ -75,6 +75,23 @@ npm run ios
 
 ---
 
+## 🔒 Seguridad RASP en Android
+
+Esta aplicación incluye una integración de seguridad de tipo RASP (Runtime Application Self-Protection) en la capa Android.
+
+- Se utiliza la librería `com.aheaditec.talsec.security:TalsecSecurity-Community:18.0.2`.
+- El módulo `android/app/src/main/java/com/app_pokedex/SecurityManager.kt` configura detecciones de:
+  - root
+  - depuración dinámica
+  - emulador
+  - hooks dinámicos
+  - manipulación de APK
+- Si se detecta una amenaza, se registra con `Log.d("SECURITY_RASP", ...)` y la aplicación finaliza la tarea para proteger el entorno.
+
+> Actualmente la integración RASP está implementada en Android y forma parte de la protección de la app en tiempo de ejecución.
+
+---
+
 ## 🧪 Pruebas Unitarias
 
 El proyecto cuenta con un conjunto de pruebas automatizadas escritas en **Jest** para validar la integridad de la lógica de negocio, las peticiones HTTP y el mapeo de repositorios.

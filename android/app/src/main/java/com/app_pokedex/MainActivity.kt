@@ -4,7 +4,7 @@ import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
-
+import android.util.Log
 class MainActivity : ReactActivity() {
 
   /**
@@ -19,4 +19,28 @@ class MainActivity : ReactActivity() {
    */
   override fun createReactActivityDelegate(): ReactActivityDelegate =
       DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
+
+
+   /**
+   * RASP Security Check
+   */
+  override fun onStart() {
+        super.onStart()
+        checkSecurity()
+    }
+
+  override fun onResume() {
+        super.onResume()
+        checkSecurity()
+    }
+
+    private var isHandlingThreat = false
+    private fun checkSecurity() {
+        SecurityManager.checkRuntimeSecurity(this) { threat ->
+            Log.d("SECURITY_RASP", "Amenaza detectada: $threat")
+            if(isHandlingThreat) return@checkRuntimeSecurity
+            isHandlingThreat = true
+            finishAndRemoveTask()
+        }
+    }
 }
